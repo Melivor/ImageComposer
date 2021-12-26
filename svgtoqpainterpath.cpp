@@ -2,6 +2,7 @@
 #include <qmath.h>
 #include <QDomDocument>
 #include <QFile>
+#include <QDebug>
 Q_CORE_EXPORT double qstrtod(const char *s00, char const **se, bool *ok);
 
 
@@ -10,13 +11,17 @@ QList<QPainterPath> SvgToQPainterPath::getElements(const QString filename)
     QList<QPainterPath> pathList;    // Declare the stack list boxes
 
     QDomDocument doc;       // document object
+    qDebug()<<__PRETTY_FUNCTION__<<": "<<filename;
     QFile file(filename);   // Open your SVG-file
     // If it is not opened, or have failed to transmit the contents in QDocDocument
-    if (!file.open(QIODevice::ReadOnly) || !doc.setContent(&file))
+    if (!file.open(QIODevice::ReadOnly) || !doc.setContent(&file)){
+        qWarning()<<__PRETTY_FUNCTION__<<": can't open scheme file";
         return pathList;    // the refund list, but empty
-
+    }
     // We are looking for all objects in a document with tag g
     QDomNodeList gList = doc.elementsByTagName("g");
+
+    qDebug()<<"group g number: "<<gList.size();
     // Getting them to touch
     for (int i = 0; i < gList.size(); i++) {
         QDomNode gNode = gList.item(i);     // Select from the node list
