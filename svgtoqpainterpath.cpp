@@ -26,12 +26,14 @@ QList<QPainterPath> SvgToQPainterPath::getElements(const QString filename)
     for (int i = 0; i < gList.size(); i++) {
         QDomNode gNode = gList.item(i);     // Select from the node list
         QDomElement path = gNode.firstChildElement("path");    // And we seek in her element c rect tag
-        while(path.isNull()){
+        while(!path.isNull()){
             QString dataStr=path.attribute("d");
             QPainterPath painterPath;
             parsePathDataFast(dataStr,painterPath);
+           // QString path.attribute("transform");
             pathList.append(painterPath);
             path=path.nextSiblingElement("path");
+
         }
     }
     file.close();

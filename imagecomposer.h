@@ -14,9 +14,9 @@ public:
     qreal totalWidth(){return m_maxX-m_minX;}
     qreal x(){return m_minX;}
     qreal y(){return m_minY;}
-    void paintAll(const QPicture& pic, const QString& path);
-    void paintElement(const QPicture& pic, const QString& path, int elementIndice, qreal scaleX=1, qreal scaleY=1);
-    void paintComposition();
+    void paintAll(const QImage& image, const QString& path);
+    void paintElement(const QImage &image, const QString& path, int elementIndice, qreal scaleX=1, qreal scaleY=1);
+    void paintComposition(const QImage &imageSource, const QString &path, qreal scaleX, qreal scaleY);
 private:
     QList<QPainterPath> m_elements={};
     qreal m_minX=0;
